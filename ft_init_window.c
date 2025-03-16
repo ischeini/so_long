@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_init_window.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:42:10 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/15 19:16:32 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:36:40 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,28 @@ void	ft_scenary(t_scenary *scenary)
 	scenary->exit = 0;
 }
 
-mlx_image_t	*ft_init_characters(mlx_t *mlx, mlx_texture_t *icon_texture)
+mlx_image_t	*ft_init_texture(t_malloc *alloc, char *name)
 {
-	mlx_image_t	*character;
-	int			color;
+	mlx_texture_t	*space;
+	mlx_image_t		*img;
 
-	character = mlx_new_image(mlx, 50, 50);
-	if (!character || mlx_image_to_window(mlx, character, 0, 0) < 0)
-	{
-		mlx_delete_texture(icon_texture);
-		mlx_terminate(mlx);
+	space = mlx_load_png(name);
+	space->height = 64;
+	space->width = 64;
+	if (!space)
 		return (NULL);
-	}
-	color = ft_dye(200, 200, 100, 50);
-	mlx_put_pixel(character, 0, 0, color);
-	return (character);
+	img = mlx_texture_to_image(alloc->mlx, space);
+	mlx_delete_texture(space);
+	if (!img)
+		return (NULL);
+	return (img);
 }
 
 mlx_texture_t	*ft_init_icon(mlx_t *mlx)
 {
 	mlx_texture_t	*icon_texture;
-	const char		*icon;
 	
-	icon = "car.png";
-	icon_texture = mlx_load_png(icon);
+	icon_texture = mlx_load_png("car.png");
 	if (!icon_texture)
 	{
 		mlx_terminate(mlx);
@@ -54,14 +52,18 @@ mlx_texture_t	*ft_init_icon(mlx_t *mlx)
 	return (icon_texture);
 }
 
-mlx_t	*ft_init_mlx()
+mlx_t	*ft_init_mlx(t_malloc *alloc)
 {
-	mlx_t			*mlx;
-	char			*name;
+	int32_t	height;
+	int32_t	width;
+	mlx_t	*mlx;
+	char	*name;
 
+	width = alloc->scenary->width * 64;
+	height = alloc->scenary->height * 64;
 	name = "Police scape";
-	mlx_set_setting(MLX_MAXIMIZED, true);
-	mlx = mlx_init(WIDTH, HEIGHT, name, true);
+	mlx_set_setting(MLX_MAXIMIZED, false);
+	mlx = mlx_init(width, height, name, false);
 	if (!mlx)
 		return (NULL);
 	mlx_set_window_title(mlx, name);

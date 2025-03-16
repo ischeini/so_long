@@ -39,6 +39,7 @@ SRC		=	$(SRCDIR)ft_atoi.c					\
 			$(SRCDIR)ft_utoa_base.c				\
 			$(SRCDIR)ft_putchar_fd.c			\
 			$(SRCDIR)ft_putendl_fd.c			\
+			$(SRCDIR)ft_free_char_pp.c			\
 			${SRCDIR}ft_printf_utils.c 			\
 #
 BSRC	=	$(SRC)								\

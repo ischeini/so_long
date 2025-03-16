@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/15 13:14:09 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/15 18:04:18 by ischeini         ###   ########.fr       */
+/*   Created: 2024/09/14 19:45:14 by sscheini          #+#    #+#             */
+/*   Updated: 2024/09/14 20:49:38 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "ft_so_long.h"
-
-int	ft_free_char(char **to_free)
+int	ft_toupper(int c)
 {
-	int	i;
-
-	i = 0;
-	if (to_free)
-	{
-		while (to_free[i])
-		{
-			free(to_free[i]);
-			i++;
-		}
-		free(to_free);
-	}
-	return (0);
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
 }

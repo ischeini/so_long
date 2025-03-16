@@ -6,45 +6,68 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:05:59 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/15 19:18:49 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:49:48 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_so_long.h"
 
-static void	ft_hook(void *param)
+int	ft_start_game(t_malloc *alloc)
 {
-	const mlx_t *mlx;
-
-	mlx = param;
+	alloc->map->character = ft_init_texture(alloc, "character.png");
+	if (!alloc->map->character)
+		return (ft_free_alloc(alloc));
+	if (mlx_image_to_window(alloc->mlx, alloc->map->character, 64, 64) < 0)
+		return (ft_free_alloc(alloc));
+	alloc->map->object = ft_init_texture(alloc, "object.png");
+	if (!alloc->map->object)
+		return (ft_free_alloc(alloc));
+	if (mlx_image_to_window(alloc->mlx, alloc->map->object, 128, 128) < 0)
+		return (ft_free_alloc(alloc));
+	alloc->map->walls = ft_init_texture(alloc, "walls.png");
+	if (!alloc->map->walls)
+		return (ft_free_alloc(alloc));
+	if (mlx_image_to_window(alloc->mlx, alloc->map->walls, 192, 192) < 0)
+		return (ft_free_alloc(alloc));
+	alloc->map->start = ft_init_texture(alloc, "start.png");
+	if (!alloc->map->start)
+		return (ft_free_alloc(alloc));
+	if (mlx_image_to_window(alloc->mlx, alloc->map->start, 256, 256) < 0)
+		return (ft_free_alloc(alloc));
+	alloc->map->exit = ft_init_texture(alloc, "exit.png");
+	if (!alloc->map->exit)
+		return (ft_free_alloc(alloc));
+	if (mlx_image_to_window(alloc->mlx, alloc->map->exit, 320, 320) < 0)
+		return (ft_free_alloc(alloc));
+	alloc->map->space = ft_init_texture(alloc, "space.png");
+	if (!alloc->map->space)
+		return (ft_free_alloc(alloc));
+	if (mlx_image_to_window(alloc->mlx, alloc->map->space, 384, 384) < 0)
+				return (ft_free_alloc(alloc));
+	return (1);
 }
 
 int	main(int argv, char **args)
 {
-	mlx_texture_t	*icon_texture;
-	mlx_image_t		*character;
-	t_scenary		*scenary;
-	mlx_t			*mlx;
+	t_malloc	*alloc;
 
-	scenary = ft_isscenary(argv, args);
-	if (!scenary)
+	alloc = (t_malloc *)malloc(sizeof(t_malloc));
+	if (!alloc)
 		return (1);
-	mlx = ft_init_mlx();
-	if (!mlx)
-		return (1);
-	icon_texture = ft_init_icon(mlx);
-	if (!icon_texture)
-		return (1);
-	character = ft_init_characters(mlx, icon_texture);
-	if (!character)
-		return (1);
-	ft_start_game(mlx, icon_texture, character);
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_delete_texture(icon_texture);
-	mlx_delete_image(mlx, character);
-	ft_free_char(scenary->map);
-	free(scenary);
-	mlx_terminate(mlx);
+	alloc->map = (t_map *)malloc(sizeof (t_map));
+	if (!alloc->map)
+		return (ft_free_alloc(alloc));
+	alloc->scenary = ft_isscenary(argv, args);
+	if (!alloc->scenary)
+		return (ft_free_alloc(alloc));
+	alloc->mlx = ft_init_mlx(alloc);
+	if (!alloc->mlx)
+		return (ft_free_alloc(alloc));
+	alloc->icon_texture = ft_init_icon(alloc->mlx);
+	if (!alloc->icon_texture)
+		return (ft_free_alloc(alloc));
+	ft_start_game(alloc);
+	mlx_loop(alloc->mlx);
+	//ft_free_alloc(alloc);
 	return (0);
 }
