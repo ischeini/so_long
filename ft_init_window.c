@@ -6,11 +6,30 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:42:10 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/16 19:36:40 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:22:09 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_so_long.h"
+
+int	ft_flood_fill(t_scenary *scenary, int x, int y)
+{
+	int	filled;
+
+	filled = 0;
+	if (x < 0 || y < 0 || x >= scenary->height || y >= scenary->width)
+		return (0);
+	if (scenary->map_clone[x][y] == '1' || scenary->map_clone[x][y] == '*')
+		return (0);
+	if (scenary->map_clone[x][y] == 'C' || scenary->map_clone[x][y] == 'E')
+		filled = 1;
+	scenary->map_clone[x][y] = '*';
+	filled += ft_flood_fill(scenary, x + 1, y);
+	filled += ft_flood_fill(scenary, x - 1, y);
+	filled += ft_flood_fill(scenary, x, y + 1);
+	filled += ft_flood_fill(scenary, x, y - 1);
+	return (filled);
+}
 
 void	ft_scenary(t_scenary *scenary)
 {
@@ -19,20 +38,27 @@ void	ft_scenary(t_scenary *scenary)
 	scenary->space = 0;
 	scenary->start = 0;
 	scenary->exit = 0;
+	scenary->x = 0;
+	scenary->y = 0;
 }
 
-mlx_image_t	*ft_init_texture(t_malloc *alloc, char *name)
+mlx_image_t	*ft_init_text(t_malloc *alloc, char *name)
 {
 	mlx_texture_t	*space;
 	mlx_image_t		*img;
 
 	space = mlx_load_png(name);
-	space->height = 64;
-	space->width = 64;
+	space->height = 128;
+	space->width = 128;
 	if (!space)
 		return (NULL);
+	img = (mlx_image_t *)malloc(sizeof(mlx_image_t));
+	if (!img)
+	{
+		mlx_delete_texture(space);
+		return (NULL);
+	}
 	img = mlx_texture_to_image(alloc->mlx, space);
-	mlx_delete_texture(space);
 	if (!img)
 		return (NULL);
 	return (img);
@@ -41,8 +67,8 @@ mlx_image_t	*ft_init_texture(t_malloc *alloc, char *name)
 mlx_texture_t	*ft_init_icon(mlx_t *mlx)
 {
 	mlx_texture_t	*icon_texture;
-	
-	icon_texture = mlx_load_png("car.png");
+
+	icon_texture = mlx_load_png("icon/car.png");
 	if (!icon_texture)
 	{
 		mlx_terminate(mlx);
@@ -59,8 +85,8 @@ mlx_t	*ft_init_mlx(t_malloc *alloc)
 	mlx_t	*mlx;
 	char	*name;
 
-	width = alloc->scenary->width * 64;
-	height = alloc->scenary->height * 64;
+	width = alloc->scenary->width * 128;
+	height = alloc->scenary->height * 128;
 	name = "Police scape";
 	mlx_set_setting(MLX_MAXIMIZED, false);
 	mlx = mlx_init(width, height, name, false);

@@ -15,6 +15,8 @@ SRC		=	$(SRCDIR)ft_atoi.c					\
 			$(SRCDIR)ft_strlen.c				\
 			$(SRCDIR)ft_substr.c				\
 			$(SRCDIR)ft_issign.c				\
+			$(SRCDIR)ft_pstrlen.c				\
+			$(SRCDIR)ft_pstrdup.c				\
 			$(SRCDIR)ft_isspace.c				\
 			$(SRCDIR)ft_isalnum.c				\
 			$(SRCDIR)ft_isalpha.c				\

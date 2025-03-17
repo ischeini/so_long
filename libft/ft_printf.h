@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:44:05 by sscheini          #+#    #+#             */
-/*   Updated: 2024/12/04 16:49:35 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:14:53 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ char		*ft_chrdup(char c);
 char		*ft_ptrdup(void *ptr, int spf);
 
 /* Writes the formatted output to stdout.									*/
-int			ft_printf(char const *txt, ...);
+int			ft_printf(char const *s, ...);
 
 #endif
