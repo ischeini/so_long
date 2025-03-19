@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:07:42 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/17 19:25:11 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/19 20:16:38 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_scenary
 	int		walls;
 	int		space;
 	int		start;
+	int		open;
+	int		find;
 	int		exit;
 	int		x;
 	int		y;
@@ -82,12 +84,20 @@ mlx_t			*ft_init_mlx(t_malloc *alloc);
 /*initiate the data from the escenary										 */
 void			ft_scenary(t_scenary *scenary);
 
-/*ft_dye get a combination color from Transparent), Red, Green and Blue		 */
+int				ft_hooks_mlx(t_malloc *alloc);
+
+int				ft_start_game(t_malloc *alloc);
+
+/*ft_dye get a combination color from Transparent, Red, Green and Blue		 */
 int				ft_dye(unsigned char t, unsigned char r,
 					unsigned char g, unsigned char b);
 
+int				ft_start_texture(t_malloc *alloc);
+
 /*free a char **										 					 */
 int				ft_flood_fill(t_scenary *scenary, int x, int y);
+
+void			ft_free_map(t_malloc *alloc);
 
 int				ft_free_alloc(t_malloc *alloc, int error);
 

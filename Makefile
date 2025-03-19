@@ -9,7 +9,7 @@ SRC		=	${SRCDIR}ft_so_long.c		\
 			${SRCDIR}ft_return_dye.c	\
 			${SRCDIR}ft_free_alloc.c	\
 			${SRCDIR}ft_scenary.c		\
-			${SRCDIR}ft_moves.c			\
+			${SRCDIR}ft_loop.c			\
 
 
 OBJ = ${SRC:${SRCDIR}%.c=${OBJDIR}%.o}

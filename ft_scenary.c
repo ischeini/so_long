@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 12:46:24 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/17 19:23:12 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:40:58 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static int	ft_check_scenary(t_scenary *scenary)
 	if (scenary->width != tmp_walls || tmp_walls == 0 || scenary->width == i)
 		return (0);
 	scenary->height = i;
-	if (scenary->objet <= 0 || scenary->start < 1 || scenary->exit < 1)
+	if (scenary->objet < 1 || scenary->start != 1 || scenary->exit != 1)
 		return (0);
-	scenary->filled = scenary->exit + scenary->objet;
+	scenary->filled = scenary->objet;
 	return (1);
 }
 

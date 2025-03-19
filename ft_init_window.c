@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:42:10 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/17 19:22:09 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/19 20:17:26 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,20 @@
 int	ft_flood_fill(t_scenary *scenary, int x, int y)
 {
 	int	filled;
-
+	
 	filled = 0;
-	if (x < 0 || y < 0 || x >= scenary->height || y >= scenary->width)
+	if (x < 0 || y < 0 || x >= scenary->width || y >= scenary->height)
 		return (0);
-	if (scenary->map_clone[x][y] == '1' || scenary->map_clone[x][y] == '*')
+	if (scenary->map_clone[y][x] == '1' || scenary->map_clone[y][x] == '*')
 		return (0);
-	if (scenary->map_clone[x][y] == 'C' || scenary->map_clone[x][y] == 'E')
+	if (scenary->map_clone[y][x] == 'E')
+	{
+		scenary->find = 1;
+		return (0);
+	}
+	if (scenary->map_clone[y][x] == 'C')
 		filled = 1;
-	scenary->map_clone[x][y] = '*';
+	scenary->map_clone[y][x] = '*';
 	filled += ft_flood_fill(scenary, x + 1, y);
 	filled += ft_flood_fill(scenary, x - 1, y);
 	filled += ft_flood_fill(scenary, x, y + 1);
@@ -37,6 +42,7 @@ void	ft_scenary(t_scenary *scenary)
 	scenary->walls = 0;
 	scenary->space = 0;
 	scenary->start = 0;
+	scenary->find = 0;
 	scenary->exit = 0;
 	scenary->x = 0;
 	scenary->y = 0;
@@ -93,5 +99,7 @@ mlx_t	*ft_init_mlx(t_malloc *alloc)
 	if (!mlx)
 		return (NULL);
 	mlx_set_window_title(mlx, name);
+	if (!ft_start_texture(alloc))
+		return (0);
 	return (mlx);
 }

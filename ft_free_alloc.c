@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:14:09 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/17 19:27:12 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/19 20:06:35 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void	ft_free_map(t_malloc *alloc)
 		mlx_delete_image(alloc->mlx, alloc->map->charact);
 	if (alloc->map->obj)
 		mlx_delete_image(alloc->mlx, alloc->map->obj);
-	if (alloc->map->star)
-		mlx_delete_image(alloc->mlx, alloc->map->star);
 	if (alloc->map->wall)
 		mlx_delete_image(alloc->mlx, alloc->map->wall);
 	if (alloc->map->exit)
 		mlx_delete_image(alloc->mlx, alloc->map->exit);
+	alloc->map->charact = NULL;
+	alloc->map->wall = NULL;
+	alloc->map->exit = NULL;
+	alloc->map->obj = NULL;
 	free(alloc->map);
 }
 
@@ -43,12 +45,14 @@ int	ft_free_alloc(t_malloc *alloc, int error)
 		ft_free_map(alloc);
 	if (alloc->mlx)
 		mlx_terminate(alloc->mlx);
+	if (error == 0)
+		ft_printf("Error\n malloc");	
 	if (error == 1)
-		ft_printf("Error, icon not valid\n");
+		ft_printf("Error\n icon not valid\n");
 	if (error == 2)
-		ft_printf("Error, map not valid\n");
+		ft_printf("Error\n map not valid\n");
 	if (error == 3)
-		ft_printf("Error, mlx not valid\n");
+		ft_printf("Error\n mlx not valid\n");
 	free(alloc);
 	return (1);
 }
