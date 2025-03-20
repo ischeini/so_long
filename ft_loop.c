@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:57:34 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/20 16:42:38 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:16:22 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	ft_moves(mlx_key_data_t keydata, void *alloc)
 		ft_reload(tmp, (tmp->scenary->x + 1), tmp->scenary->y);
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(tmp->mlx);
+	
 }
 
 int	ft_hooks_mlx(t_malloc *alloc)

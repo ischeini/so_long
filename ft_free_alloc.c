@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:14:09 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/20 15:56:57 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:51:58 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ int	ft_free_alloc(t_malloc *alloc, int error)
 	}
 	if (alloc->mlx)
 		mlx_terminate(alloc->mlx);
-	if (error == 0)
-		ft_printf("Error\n malloc\n");	
 	if (error == 1)
-		ft_printf("Error\n icon not valid\n");
+		ft_printf("Error\n icon\n");
 	if (error == 2)
-		ft_printf("Error\n map not valid\n");
+		ft_printf("Error\n map\n");
 	if (error == 3)
-		ft_printf("Error\n mlx not valid\n");
+		ft_printf("Error\n mlx\n");
 	free(alloc);
 	return (1);
 }

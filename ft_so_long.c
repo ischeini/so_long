@@ -6,11 +6,38 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:05:59 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/20 16:20:36 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 19:10:13 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_so_long.h"
+
+static t_position	ft_resize(t_malloc *alloc, mlx_image_t *img, t_position	p)
+{
+	t_position	size;
+	int32_t		height;
+	int32_t		width;
+
+	width = alloc->scenary->width * 128;
+	height = alloc->scenary->height * 128;
+	p.height = 128;
+	p.width = 128;
+	while (width > 3840)
+	{
+		p.width /= 1.5;
+		width /= 1.5;
+	}
+	while (height >2160)
+	{
+		p.height /= 1.5;
+		height /= 1.5;
+	}
+	mlx_resize_image(img, p.width, p.height);
+	size.x = p.width;
+	size.y = p.height;
+	mlx_set_window_limit(alloc->mlx, 0, 0, width, height);
+	return (size);
+}
 
 static int	ft_start_scenary(t_malloc *alloc, char texture, t_position p)
 {
@@ -18,21 +45,25 @@ static int	ft_start_scenary(t_malloc *alloc, char texture, t_position p)
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->wall, p.x, p.y) < 0)
 			return (0);
+		ft_resize(alloc, alloc->map->wall, p);
 	}
 	if (texture == 'C')
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->obj, p.x, p.y) < 0)
 			return (0);
+		ft_resize(alloc, alloc->map->obj, p);
 	}
 	if (texture == 'E')
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->exit, p.x, p.y) < 0)
 			return (0);
+		ft_resize(alloc, alloc->map->exit, p);
 	}
 	if (texture == 'P')
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->charact, p.x, p.y) < 0)
 			return (0);
+		ft_resize(alloc, alloc->map->charact, p);
 	}
 	return (1);
 }
@@ -59,6 +90,7 @@ int	ft_start_texture(t_malloc *alloc)
 
 int	ft_start_game(t_malloc *alloc)
 {
+	t_position	size;
 	t_position	p;
 	
 	p.j = 0;
@@ -69,18 +101,17 @@ int	ft_start_game(t_malloc *alloc)
 	{
 		p.i = 0;
 		p.x = 0;
-		while (alloc->scenary->map[p.j][p.i])
+		while (alloc->scenary->map[p.j][p.i] && alloc->scenary->map[p.j][p.i] != '\n')
 		{
-			if (alloc->scenary->map[p.j][p.i] == '\n')
-				break ;
 			if (mlx_image_to_window(alloc->mlx, alloc->map->spa, p.x, p.y) < 0)
 				return (0);
+			size = ft_resize(alloc, alloc->map->spa, p);
 			if (!ft_start_scenary(alloc, alloc->scenary->map[p.j][p.i], p))
 				return (0);
-			p.x += 128;
+			p.x += size.x;
 			p.i++;
 		}
-		p.y += 128;
+		p.y += size.y;
 		p.j++;
 	}
 	return (1);
@@ -96,7 +127,7 @@ int	main(int argv, char **args)
 		return (ft_printf("Error\n malloc"));
 	alloc->map = (t_map *)malloc(sizeof (t_map));
 	if (!alloc->map)
-		return (ft_free_alloc(alloc, 0));
+		return (ft_free_alloc(alloc, 3));
 	alloc->scenary = ft_isscenary(argv, args);
 	if (!alloc->scenary)
 		return (ft_free_alloc(alloc, 2));

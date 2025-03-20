@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:42:10 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/20 16:02:45 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 19:10:15 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,12 @@ mlx_t	*ft_init_mlx(t_malloc *alloc)
 
 	width = alloc->scenary->width * 128;
 	height = alloc->scenary->height * 128;
+	while (width > 3840)
+		width /= 1.5;
+	while (height > 2160)
+		height /= 1.5;
 	name = "Mineshaft";
-	mlx_set_setting(MLX_MAXIMIZED, true);
+	mlx_set_setting(MLX_MAXIMIZED, false);
 	mlx = mlx_init(width, height, name, true);
 	if (!mlx)
 		return (NULL);

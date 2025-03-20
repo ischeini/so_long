@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:07:42 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/20 15:05:36 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:53:48 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 typedef struct s_position
 {
+	int	height;
+	int	width;
 	int	x;
 	int	y;
 	int	i;
@@ -34,6 +36,7 @@ typedef struct s_scenary
 	int32_t	width;
 	char	**map_clone;
 	char	**map;
+	int		zoom_level;
 	int		filled;
 	int		objet;
 	int		walls;
