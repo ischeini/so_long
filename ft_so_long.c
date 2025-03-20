@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:05:59 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/19 20:19:42 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:20:36 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ static int	ft_start_scenary(t_malloc *alloc, char texture, t_position p)
 
 int	ft_start_texture(t_malloc *alloc)
 {
-	alloc->map->wall = ft_init_text(alloc, "scenary/wall.png");
+	alloc->map->wall = ft_init_text(alloc, "textures/wall.png");
 	if (!alloc->map->wall)
 		return (0);
-	alloc->map->obj = ft_init_text(alloc, "scenary/obj.png");
+	alloc->map->obj = ft_init_text(alloc, "textures/obj.png");
 	if (!alloc->map->obj)
 		return (0);
-	alloc->map->exit = ft_init_text(alloc, "scenary/exit.png");
+	alloc->map->exit = ft_init_text(alloc, "textures/exit.png");
 	if (!alloc->map->exit)
 		return (0);
-	alloc->map->charact = ft_init_text(alloc, "scenary/charact.png");
+	alloc->map->charact = ft_init_text(alloc, "textures/charact.png");
 	if (!alloc->map->charact)
 		return (0);
-	alloc->map->spa = ft_init_text(alloc, "scenary/spa.png");
+	alloc->map->spa = ft_init_text(alloc, "textures/spa.png");
 	if (!alloc->map->spa)
 		return (0);
 	return (1);
@@ -63,16 +63,19 @@ int	ft_start_game(t_malloc *alloc)
 	
 	p.j = 0;
 	p.y = 0;
-
+	if (!ft_start_texture(alloc))
+		return (0);
 	while (alloc->scenary->map[p.j])
 	{
 		p.i = 0;
 		p.x = 0;
 		while (alloc->scenary->map[p.j][p.i])
 		{
+			if (alloc->scenary->map[p.j][p.i] == '\n')
+				break ;
 			if (mlx_image_to_window(alloc->mlx, alloc->map->spa, p.x, p.y) < 0)
 				return (0);
-			if (ft_start_scenary(alloc, alloc->scenary->map[p.j][p.i], p))
+			if (!ft_start_scenary(alloc, alloc->scenary->map[p.j][p.i], p))
 				return (0);
 			p.x += 128;
 			p.i++;
@@ -103,11 +106,10 @@ int	main(int argv, char **args)
 	alloc->mlx = ft_init_mlx(alloc);
 	if (!alloc->mlx)
 		return (ft_free_alloc(alloc, 3));
-	return (0);
-	/*alloc->icon_texture = ft_init_icon(alloc->mlx);
-	if (!alloc->icon_texture)
+	alloc->icon_texture = ft_init_icon(alloc->mlx);
+	if (!alloc->icon_texture )
 		return (ft_free_alloc(alloc, 1));
 	if (!ft_start_game(alloc))
-		return (ft_free_alloc(alloc, 1));
-	return (ft_hooks_mlx(alloc));*/
+		return (ft_free_alloc(alloc, 3));
+	return (ft_hooks_mlx(alloc));
 }

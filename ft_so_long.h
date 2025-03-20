@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:07:42 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/19 20:16:38 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:05:36 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_scenary
 	int		walls;
 	int		space;
 	int		start;
+	int		moves;
 	int		open;
 	int		find;
 	int		exit;
@@ -49,7 +50,6 @@ typedef struct s_scenary
 typedef struct s_map
 {
 	mlx_image_t	*charact;
-	mlx_image_t	*star;
 	mlx_image_t	*wall;
 	mlx_image_t	*exit;
 	mlx_image_t	*spa;

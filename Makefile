@@ -2,11 +2,10 @@ NAME = so_long
 
 LIB = libft/libft.a
 
-MILI = ${MILI_PATH}/build/libmlx42.a
+MILI = /build/libmlx42.a
 
 SRC		=	${SRCDIR}ft_so_long.c		\
 			${SRCDIR}ft_init_window.c	\
-			${SRCDIR}ft_return_dye.c	\
 			${SRCDIR}ft_free_alloc.c	\
 			${SRCDIR}ft_scenary.c		\
 			${SRCDIR}ft_loop.c			\

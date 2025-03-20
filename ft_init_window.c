@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:42:10 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/19 20:17:26 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:02:45 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_scenary(t_scenary *scenary)
 	scenary->walls = 0;
 	scenary->space = 0;
 	scenary->start = 0;
+	scenary->moves = 0;
 	scenary->find = 0;
 	scenary->exit = 0;
 	scenary->x = 0;
@@ -54,6 +55,8 @@ mlx_image_t	*ft_init_text(t_malloc *alloc, char *name)
 	mlx_image_t		*img;
 
 	space = mlx_load_png(name);
+	if (!space)
+		return (NULL);
 	space->height = 128;
 	space->width = 128;
 	if (!space)
@@ -65,6 +68,7 @@ mlx_image_t	*ft_init_text(t_malloc *alloc, char *name)
 		return (NULL);
 	}
 	img = mlx_texture_to_image(alloc->mlx, space);
+	mlx_delete_texture(space);
 	if (!img)
 		return (NULL);
 	return (img);
@@ -74,12 +78,9 @@ mlx_texture_t	*ft_init_icon(mlx_t *mlx)
 {
 	mlx_texture_t	*icon_texture;
 
-	icon_texture = mlx_load_png("icon/car.png");
+	icon_texture = mlx_load_png("textures/icon.png");
 	if (!icon_texture)
-	{
-		mlx_terminate(mlx);
 		return (NULL);
-	}
 	mlx_set_icon(mlx, icon_texture);
 	return (icon_texture);
 }
@@ -93,13 +94,11 @@ mlx_t	*ft_init_mlx(t_malloc *alloc)
 
 	width = alloc->scenary->width * 128;
 	height = alloc->scenary->height * 128;
-	name = "Police scape";
-	mlx_set_setting(MLX_MAXIMIZED, false);
-	mlx = mlx_init(width, height, name, false);
+	name = "Mineshaft";
+	mlx_set_setting(MLX_MAXIMIZED, true);
+	mlx = mlx_init(width, height, name, true);
 	if (!mlx)
 		return (NULL);
 	mlx_set_window_title(mlx, name);
-	if (!ft_start_texture(alloc))
-		return (0);
 	return (mlx);
 }

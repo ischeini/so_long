@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:14:09 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/19 20:06:35 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:56:57 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ void	ft_free_map(t_malloc *alloc)
 		mlx_delete_image(alloc->mlx, alloc->map->wall);
 	if (alloc->map->exit)
 		mlx_delete_image(alloc->mlx, alloc->map->exit);
-	alloc->map->charact = NULL;
-	alloc->map->wall = NULL;
-	alloc->map->exit = NULL;
-	alloc->map->obj = NULL;
-	free(alloc->map);
+	if (alloc->map->spa)
+		mlx_delete_image(alloc->mlx, alloc->map->spa);
 }
 
 int	ft_free_alloc(t_malloc *alloc, int error)
@@ -42,11 +39,14 @@ int	ft_free_alloc(t_malloc *alloc, int error)
 		free(alloc->scenary);
 	}
 	if (alloc->map)
+	{
 		ft_free_map(alloc);
+		free(alloc->map);
+	}
 	if (alloc->mlx)
 		mlx_terminate(alloc->mlx);
 	if (error == 0)
-		ft_printf("Error\n malloc");	
+		ft_printf("Error\n malloc\n");	
 	if (error == 1)
 		ft_printf("Error\n icon not valid\n");
 	if (error == 2)
