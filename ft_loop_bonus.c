@@ -1,36 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_loop.c                                          :+:      :+:    :+:   */
+/*   ft_loop_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 13:57:34 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 16:31:21 by ischeini         ###   ########.fr       */
+/*   Created: 2025/03/29 13:21:24 by ischeini          #+#    #+#             */
+/*   Updated: 2025/03/29 17:34:24 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_so_long.h"
+#include "ft_so_long_bonus.h"
 
+static void	ft_print_moves(t_malloc *tmp, int moves)
+{
+	char	*str;
+	int		intlen;
+	int		nbr;
+
+	nbr = moves;
+	intlen = 1;
+	while (nbr >= 10 && intlen++)
+		nbr /= 10;	
+	str = malloc((intlen + 1) * sizeof(char));
+	if (!str)
+		return ;
+	nbr = moves;
+	str[intlen] = '\0';
+	while (intlen > 0)
+	{
+		str[--intlen] = (nbr % 10) + '0';
+		nbr /= 10;
+	}
+	tmp->map->moves = mlx_put_string(tmp->mlx, str, 100, 75);
+	mlx_resize_image(tmp->map->moves, 70, 90);
+	free(str);
+}
 
 static void	ft_reload(t_malloc *tmp, int x, int y)
 {
 	if (tmp->scenary->map[y][x] == '0' || tmp->scenary->map[y][x] == 'C')
 	{
 		if (tmp->scenary->map[y][x] == 'C')
-		{
 			tmp->scenary->find += 1;
-		}
 		tmp->scenary->map[tmp->scenary->y][tmp->scenary->x] = '0';
 		tmp->scenary->map[y][x] = 'P';
 		tmp->scenary->x = x;
 		tmp->scenary->y = y;
 		tmp->scenary->moves += 1;
-		printf("%i\n", tmp->scenary->moves);
 	}
-	if (tmp->scenary->map[y][x] == 'E')
+	if (tmp->scenary->map[y][x] == 'E' || tmp->scenary->map[y][x] == 'M')
 	{
-		if (tmp->scenary->find == tmp->scenary->objet)
+		if (tmp->scenary->find == tmp->scenary->objet
+			|| tmp->scenary->map[y][x] == 'M')
 		{
 			mlx_close_window(tmp->mlx);
 			return ;
@@ -38,6 +60,7 @@ static void	ft_reload(t_malloc *tmp, int x, int y)
 	}
 	ft_free_map(tmp);
 	ft_start_game(tmp);
+	ft_print_moves(tmp, tmp->scenary->moves);
 }
 
 static void	ft_moves(mlx_key_data_t keydata, void *alloc)
@@ -65,7 +88,7 @@ static void	ft_moves(mlx_key_data_t keydata, void *alloc)
 		mlx_close_window(tmp->mlx);
 }
 
-int	ft_hooks_mlx(t_malloc *alloc)
+int	ft_bonus_hooks_mlx(t_malloc *alloc)
 {
 	alloc->scenary->find = 0;
 	mlx_key_hook(alloc->mlx, &ft_moves, (void *) alloc);

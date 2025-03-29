@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 12:46:24 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/19 14:40:58 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/29 13:16:43 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_check_objet(t_scenary *scenary, char *obj)
 			scenary->walls++;
 		else if (obj[i] == 'P' && ++scenary->start)
 			scenary->x = i;
-		else if (obj[i] == '0')
+		else if (obj[i] == '0' || obj[i] == 'M')
 			scenary->space++;
 		else if (obj[i] == 'C')
 			scenary->objet++;
@@ -118,7 +118,7 @@ t_scenary	*ft_isscenary(int argv, char **args)
 {
 	t_scenary	*scenary;
 
-	if (argv <= 1)
+	if (argv != 2)
 		return (NULL);
 	scenary = malloc(sizeof(t_scenary));
 	if (!scenary)
@@ -133,36 +133,3 @@ t_scenary	*ft_isscenary(int argv, char **args)
 		return (0);
 	return (scenary);
 }
-
-/*int main(int argc, char **argv) {
-    t_scenary *scenary;
-
-    // Inicializar la estructura t_scenary
-    scenary = ft_isscenary(argc, argv);
-    if (!scenary) {
-        printf("Error al inicializar el escenario.\n");
-        return 1;
-    }
-
-    // Comprobar el contenido de la estructura t_scenary
-    printf("Análisis del escenario:\n");
-    printf("Ancho: %d\n", scenary->width);
-    printf("Altura: %d\n", scenary->height);
-    printf("Paredes: %d\n", scenary->walls);
-    printf("Espacios: %d\n", scenary->space);
-    printf("Objetos: %d\n", scenary->objet);
-    printf("Salidas: %d\n", scenary->exit);
-    printf("Posición del jugador (x, y): (%d, %d)\n", scenary->x, scenary->y);
-
-    // Imprimir el mapa
-    printf("Mapa:\n");
-    for (int i = 0; i < scenary->height; i++) {
-        printf("%s", scenary->map[i]);
-    }
-
-    // Liberar la memoria
-    ft_free_char(scenary->map);
-    free(scenary);
-
-    return 0;
-}*/

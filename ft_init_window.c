@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:42:10 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/20 19:10:15 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/29 12:48:08 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 int	ft_flood_fill(t_scenary *scenary, int x, int y)
 {
 	int	filled;
-	
+
 	filled = 0;
 	if (x < 0 || y < 0 || x >= scenary->width || y >= scenary->height)
 		return (0);
-	if (scenary->map_clone[y][x] == '1' || scenary->map_clone[y][x] == '*')
+	if (scenary->map_clone[y][x] == '1' || scenary->map_clone[y][x] == '*' ||
+		scenary->map_clone[y][x] == 'M')
 		return (0);
 	if (scenary->map_clone[y][x] == 'E')
 	{

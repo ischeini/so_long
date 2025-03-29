@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_char_pp.c                                  :+:      :+:    :+:   */
+/*   ft_so_long_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:25:04 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 12:02:41 by ischeini         ###   ########.fr       */
+/*   Created: 2025/03/22 14:01:26 by ischeini          #+#    #+#             */
+/*   Updated: 2025/03/29 13:58:01 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
+# include "ft_so_long.h"
 
-int	ft_free_char(char **to_free)
-{
-	int	i;
+int	ft_bonus_hooks_mlx(t_malloc *alloc);
 
-	i = 0;
-	if (to_free)
-	{
-		while (to_free[i])
-		{
-			free(to_free[i]);
-			i++;
-		}
-		free(to_free);
-	}
-	return (0);
-}
+#endif

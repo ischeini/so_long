@@ -6,11 +6,38 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:14:09 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/20 17:51:58 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/29 16:46:26 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_so_long.h"
+
+t_position	ft_resize(t_malloc *alloc, mlx_image_t *img, t_position	p)
+{
+	t_position	size;
+	int32_t		height;
+	int32_t		width;
+
+	width = alloc->scenary->width * 128;
+	height = alloc->scenary->height * 128;
+	p.height = 128;
+	p.width = 128;
+	while (width > 3840)
+	{
+		p.width /= 1.5;
+		width /= 1.5;
+	}
+	while (height > 2160)
+	{
+		p.height /= 1.5;
+		height /= 1.5;
+	}
+	mlx_resize_image(img, p.width, p.height);
+	size.x = p.width;
+	size.y = p.height;
+	mlx_set_window_limit(alloc->mlx, 0, 0, width, height);
+	return (size);
+}
 
 void	ft_free_map(t_malloc *alloc)
 {
@@ -24,6 +51,10 @@ void	ft_free_map(t_malloc *alloc)
 		mlx_delete_image(alloc->mlx, alloc->map->exit);
 	if (alloc->map->spa)
 		mlx_delete_image(alloc->mlx, alloc->map->spa);
+	if (alloc->map->moves)
+		mlx_delete_image(alloc->mlx, alloc->map->moves);
+	if (alloc->map->mob)
+		mlx_delete_image(alloc->mlx, alloc->map->mob);
 }
 
 int	ft_free_alloc(t_malloc *alloc, int error)
@@ -46,11 +77,11 @@ int	ft_free_alloc(t_malloc *alloc, int error)
 	if (alloc->mlx)
 		mlx_terminate(alloc->mlx);
 	if (error == 1)
-		ft_printf("Error\n icon\n");
+		ft_printf("Error\nicon\n");
 	if (error == 2)
-		ft_printf("Error\n map\n");
+		ft_printf("Error\nmap\n");
 	if (error == 3)
-		ft_printf("Error\n mlx\n");
+		ft_printf("Error\nmlx\n");
 	free(alloc);
 	return (1);
 }
