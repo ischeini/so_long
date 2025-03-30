@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:07:42 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 16:40:59 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/30 13:41:51 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ mlx_image_t		*ft_init_text(t_malloc *alloc, char *name);
 /*check if the .ber is a real scenary for the game							 */
 t_scenary		*ft_isscenary(int argv, char **args);
 
-t_position		ft_resize(t_malloc *alloc, mlx_image_t *img, t_position	p);
+t_position		ft_resize(t_malloc *alloc, mlx_image_t *img, t_position	p, int i);
 
 /*initiate the windows for the game											 */
 mlx_t			*ft_init_mlx(t_malloc *alloc);

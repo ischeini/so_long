@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 13:21:24 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 17:34:24 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/30 13:52:49 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_print_moves(t_malloc *tmp, int moves)
 	nbr = moves;
 	intlen = 1;
 	while (nbr >= 10 && intlen++)
-		nbr /= 10;	
+		nbr /= 10;
 	str = malloc((intlen + 1) * sizeof(char));
 	if (!str)
 		return ;
@@ -59,7 +59,10 @@ static void	ft_reload(t_malloc *tmp, int x, int y)
 		}
 	}
 	ft_free_map(tmp);
-	ft_start_game(tmp);
+	if ((tmp->scenary->moves % 2) == 1)
+		ft_start_game_bonus(tmp, 4);
+	else
+		ft_start_game_bonus(tmp, 0);
 	ft_print_moves(tmp, tmp->scenary->moves);
 }
 

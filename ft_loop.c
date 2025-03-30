@@ -6,12 +6,11 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:57:34 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 16:31:21 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/30 13:10:30 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_so_long.h"
-
 
 static void	ft_reload(t_malloc *tmp, int x, int y)
 {

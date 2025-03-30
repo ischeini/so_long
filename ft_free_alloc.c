@@ -6,13 +6,13 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:14:09 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 16:46:26 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/30 13:51:06 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_so_long.h"
 
-t_position	ft_resize(t_malloc *alloc, mlx_image_t *img, t_position	p)
+t_position	ft_resize(t_malloc *alloc, mlx_image_t *img, t_position	p, int i)
 {
 	t_position	size;
 	int32_t		height;
@@ -32,9 +32,9 @@ t_position	ft_resize(t_malloc *alloc, mlx_image_t *img, t_position	p)
 		p.height /= 1.5;
 		height /= 1.5;
 	}
-	mlx_resize_image(img, p.width, p.height);
-	size.x = p.width;
-	size.y = p.height;
+	mlx_resize_image(img, (p.width + i), (p.height + i));
+	size.x = (p.width + i);
+	size.y = (p.height + i);
 	mlx_set_window_limit(alloc->mlx, 0, 0, width, height);
 	return (size);
 }

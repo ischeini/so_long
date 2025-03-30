@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:05:59 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 16:46:59 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/30 13:40:56 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_start_scenary2(t_malloc *alloc, char texture, t_position p)
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->charact, p.x, p.y) < 0)
 			return (0);
-		ft_resize(alloc, alloc->map->charact, p);
+		ft_resize(alloc, alloc->map->charact, p, 0);
 	}
 	if (texture == 'M')
 		return (0);
@@ -31,19 +31,19 @@ static int	ft_start_scenary(t_malloc *alloc, char texture, t_position p)
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->wall, p.x, p.y) < 0)
 			return (0);
-		ft_resize(alloc, alloc->map->wall, p);
+		ft_resize(alloc, alloc->map->wall, p, 0);
 	}
 	else if (texture == 'C')
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->obj, p.x, p.y) < 0)
 			return (0);
-		ft_resize(alloc, alloc->map->obj, p);
+		ft_resize(alloc, alloc->map->obj, p, 0);
 	}
 	else if (texture == 'E')
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->exit, p.x, p.y) < 0)
 			return (0);
-		ft_resize(alloc, alloc->map->exit, p);
+		ft_resize(alloc, alloc->map->exit, p, 0);
 	}
 	else
 		return (ft_start_scenary2(alloc, texture, p));
@@ -87,7 +87,7 @@ int	ft_start_game(t_malloc *a)
 		{
 			if (mlx_image_to_window(a->mlx, a->map->spa, p.x, p.y) < 0)
 				return (0);
-			size = ft_resize(a, a->map->spa, p);
+			size = ft_resize(a, a->map->spa, p, 0);
 			if (!ft_start_scenary(a, a->scenary->map[p.j][p.i], p))
 				return (0);
 			p.x += size.x;
