@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 12:46:24 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/29 13:16:43 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:04:33 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,30 @@ static int	ft_check_objet(t_scenary *scenary, char *obj)
 
 static int	ft_check_scenary(t_scenary *scenary)
 {
-	int	tmp_walls;
 	int	right;
+	int	tmp;
 	int	i;
 
 	ft_scenary(scenary);
-	tmp_walls = ft_check_objet(scenary, scenary->map[0]);
+	tmp = ft_check_objet(scenary, scenary->map[0]);
 	scenary->width = (ft_strlen(scenary->map[0]) - 1);
-	if (scenary->width != tmp_walls || tmp_walls == 0)
+	if (scenary->width != scenary->walls || tmp == 0 || scenary->width > 100)
 		return (0);
 	i = 0;
-	while (++i && scenary->map[i])
+	while (++i && scenary->map[i] && i < 100)
 	{
+		tmp = scenary->walls;
 		right = ft_check_objet(scenary, scenary->map[i]);
 		if (scenary->x != 0 && scenary->y == 0)
 			scenary->y = i;
 		if (!right || scenary->width != right)
 			return (0);
 	}
-	if (scenary->width != tmp_walls || tmp_walls == 0 || scenary->width == i)
+	if (right !=  (scenary->walls - tmp) || right == 0 || scenary->width == i)
 		return (0);
 	scenary->height = i;
 	if (scenary->objet < 1 || scenary->start != 1 || scenary->exit != 1)
 		return (0);
-	scenary->filled = scenary->objet;
 	return (1);
 }
 
@@ -93,8 +93,9 @@ static int	ft_check_map(char *arg, t_scenary *scenary)
 		i++;
 	}
 	close (fd);
-	if (!ft_check_scenary(scenary))
+	if (!scenary->map[0] || !ft_check_scenary(scenary))
 		return (ft_free_char(scenary->map));
+	scenary->filled = scenary->objet;
 	return (1);
 }
 
@@ -104,9 +105,11 @@ static int	ft_is_point_ber(char *arg, t_scenary *scenary)
 	int	size;
 
 	size = ft_strlen(arg);
-	if (size < 5)
+	if (arg[0] == '.' || size <= 4)
 		return (0);
 	point = size - 4;
+	if (arg[point - 1] == '/')
+		return (0);
 	if (ft_strncmp(&arg[point], ".ber", 4))
 		return (0);
 	if (!ft_check_map(arg, scenary))
