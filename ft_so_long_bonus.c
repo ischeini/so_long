@@ -6,7 +6,7 @@
 /*   By: ischeini <ischeini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 13:59:45 by ischeini          #+#    #+#             */
-/*   Updated: 2025/03/30 13:54:53 by ischeini         ###   ########.fr       */
+/*   Updated: 2025/03/30 14:25:54 by ischeini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ static int	ft_start_mob(t_malloc *alloc, char texture, t_position p, int i)
 	}
 	if (i == 4)
 	{
-		p.x -= 32;
-		p.y -= 32;
+		p.x -= 8;
+		p.y -= 8;
 	}
 	if (texture == 'M')
 	{
 		if (mlx_image_to_window(alloc->mlx, alloc->map->mob, p.x, p.y) < 0)
 			return (0);
-		ft_resize(alloc, alloc->map->mob, p, (i * i * i + i));
+		ft_resize(alloc, alloc->map->mob, p, (i * i + i));
 	}
 	if (i == 4)
 	{
-		p.x += 32;
-		p.y += 32;
+		p.x += 8;
+		p.y += 8;
 	}
 	return (1);
 }
